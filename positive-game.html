@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Breath – Mental Health</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Commissioner:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0F172A;
+    --primary: #3B82F6;
+    --secondary: #2DD4BF;
+    --text-primary: #E5E7EB;
+    --text-secondary: #94A3B8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Commissioner', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    transition: background 2s ease;
+}
+
+/* Weather backgrounds */
+body.weather-1 {
+    background: linear-gradient(180deg, #1a2332, #0F172A);
+}
+
+body.weather-2 {
+    background: linear-gradient(180deg, #1e3a52, #1a2332);
+}
+
+body.weather-3 {
+    background: linear-gradient(180deg, #2a4a6a, #1e3a52);
+}
+
+body.weather-4 {
+    background: linear-gradient(180deg, #3b5a7f, #2a4a6a);
+}
+
+body.weather-5 {
+    background: linear-gradient(180deg, #4a6a94, #3b5a7f);
+}
+
+body.weather-6 {
+    background: linear-gradient(180deg, #5b7aa8, #4a6a94);
+}
+
+/* Background image (subtle) */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: 0;
+    transition: opacity 2s ease;
+}
+
+body.weather-6 .background-image {
+    opacity: 0.3;
+}
+
+/* Ambient background glow */
+.ambient-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: breathe 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes breathe {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.6;
+    }
+}
+
+/* Content wrapper */
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+header {
+    padding: 80px 20px 60px;
+    text-align: center;
+}
+
+.back-button {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateX(-4px);
+}
+
+header h1 { 
+    font-family: 'Crimson Pro', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* Main section */
+section {
+    padding: 40px 20px 80px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.section-header h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+/* Weather info card */
+#weatherInfo {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.25rem 2rem;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: all 0.5s ease;
+}
+
+body.weather-6 #weatherInfo {
+    background: rgba(45, 212, 191, 0.1);
+    border-color: rgba(45, 212, 191, 0.3);
+}
+
+/* Game area */
+#gameArea {
+    position: relative;
+    height: 450px;
+    border-radius: 24px;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    overflow: hidden;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(59, 130, 246, 0.1);
+    transition: all 0.5s ease;
+}
+
+body.weather-6 #gameArea {
+    background: rgba(45, 212, 191, 0.05);
+    border-color: rgba(45, 212, 191, 0.2);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        0 0 100px rgba(45, 212, 191, 0.15);
+}
+
+/* Thoughts */
+.thought {
+    position: absolute;
+    padding: 14px 22px;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9375rem;
+    user-select: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.thought:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+}
+
+.fade { 
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+}
+
+/* Explosion effect */
+.explosion {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.6), rgba(59, 130, 246, 0.3));
+    transform: scale(0);
+    animation: boom 0.6s ease-out forwards;
+    box-shadow: 0 0 30px rgba(45, 212, 191, 0.8);
+}
+
+@keyframes boom {
+    to {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* Raindrops */
+.raindrop {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(transparent, rgba(59, 130, 246, 0.4));
+    animation: fall linear infinite;
+    opacity: 0.6;
+    z-index: 0;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Birds */
+.bird {
+    position: fixed;
+    font-size: 28px;
+    animation: fly 12s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    z-index: 2;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+body.weather-6 .bird {
+    opacity: 0.9;
+}
+
+@keyframes fly {
+    0%, 100% {
+        transform: translateX(-100px) translateY(0);
+    }
+    50% {
+        transform: translateX(calc(100vw + 100px)) translateY(-30px);
+    }
+}
+
+/* Sun */
+.sun {
+    position: fixed;
+    top: 100px;
+    right: 100px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 235, 59, 0.9), rgba(255, 193, 7, 0.6));
+    border-radius: 50%;
+    box-shadow: 
+        0 0 60px rgba(255, 235, 59, 0.6),
+        0 0 100px rgba(255, 193, 7, 0.4);
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 0;
+}
+
+body.weather-6 .sun {
+    opacity: 1;
+}
+
+/* Stats bar */
+#stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.75rem;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 20px;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#stats > div {
+    font-size: 1.125rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#score {
+    font-weight: 600;
+    color: var(--secondary);
+    font-size: 1.25rem;
+}
+
+/* Buttons */
+button {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Commissioner', sans-serif;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    font-weight: 500;
+}
+
+button:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .back-button {
+        top: 20px;
+        left: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 1.25rem;
+    }
+
+    #gameArea {
+        height: 350px;
+    }
+
+    #stats {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #stats > div {
+        justify-content: center;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .sun {
+        top: 60px;
+        right: 60px;
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 60px 20px 40px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    #weatherInfo {
+        font-size: 1.25rem;
+        padding: 1rem 1.5rem;
+    }
+
+    #gameArea {
+        height: 300px;
+        border-radius: 16px;
+    }
+
+    .thought {
+        padding: 10px 16px;
+        font-size: 0.875rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-image"></div>
+<div class="ambient-bg"></div>
+<div class="sun"></div>
+
+<div class="bird" style="top: 120px; animation-delay: 0s;">🕊️</div>
+<div class="bird" style="top: 180px; animation-delay: 3s;">🕊️</div>
+<div class="bird" style="top: 150px; animation-delay: 6s;">🐦</div>
+
+<div class="content-wrapper">
+    <a href="index.html" class="back-button">←</a>
+
+    <header>
+        <h1>Breath.</h1>
+        <p>Face the thoughts. Let them dissolve.</p>
+    </header>
+
+    <section>
+        <div class="section-header">
+            <h2>🎮 Mental Mini-Game</h2>
+        </div>
+        <p class="section-description">Click on negative thoughts to transform them into positive ones.</p>
+
+        <div id="weatherInfo">🌧️ Climate: Inner Storm</div>
+
+        <div id="gameArea"></div>
+
+        <div id="stats">
+            <div>🧠 Calmed: <span id="score">0</span></div>
+        </div>
+
+    </section>
+
+    <footer>
+        Breath – Mental Health Project 💙
+    </footer>
+</div>
+
+<script>
+const gameArea = document.getElementById("gameArea");
+const scoreDisplay = document.getElementById("score");
+const weatherInfo = document.getElementById("weatherInfo");
+
+const negativeThoughts = [
+    "I can't do this",
+    "I'm overthinking",
+    "What if I fail?",
+    "I'm exhausted",
+    "I should be better",
+    "I don't have time",
+    "Nobody understands me",
+    "I'm not enough",
+    "Everything is falling apart",
+    "I'm so behind",
+    "I'll never succeed",
+    "I'm a failure",
+    "Why even try?",
+    "I'm so alone",
+    "Nothing works out for me",
+    "I'm too anxious",
+    "I can't focus",
+    "I'm letting everyone down",
+    "I'm not smart enough",
+    "I'm wasting my time"
+];
+
+const positiveThoughts = [
+    "I am doing my best",
+    "This will pass",
+    "I am capable",
+    "I am allowed to rest",
+    "I can handle this",
+    "I am safe now",
+    "I am learning and growing",
+    "I am worthy of love",
+    "I am resilient",
+    "Progress, not perfection",
+    "I trust the process",
+    "I am stronger than I think",
+    "I deserve peace",
+    "I am exactly where I need to be",
+    "I choose self-compassion",
+    "I am proud of myself",
+    "I am enough",
+    "Small steps count",
+    "I believe in myself",
+    "I am grateful for today"
+];
+
+const weatherStages = [
+    { name: "Inner Storm", emoji: "🌧️", rain: true },
+    { name: "Light Rain", emoji: "🌦️", rain: true },
+    { name: "Clearing Up", emoji: "⛅", rain: false },
+    { name: "Clear Sky", emoji: "🌤️", rain: false },
+    { name: "Beautiful Day", emoji: "☀️", rain: false },
+    { name: "Sunny Spring", emoji: "🌸", rain: false }
+];
+
+let thoughts = [];
+let score = 0;
+let raindrops = [];
+
+function updateWeather() {
+    // Cycle through weather stages every 6 thoughts
+    const stage = Math.min(Math.floor(score / 6), 5);
+    document.body.className = `weather-${stage}`;
+    weatherInfo.innerHTML = `${weatherStages[stage].emoji} Climate: ${weatherStages[stage].name}`;
+    
+    if (stage === 0 || stage === 1) {
+        if (raindrops.length === 0) startRain();
+    } else {
+        stopRain();
+    }
+}
+
+function startRain() {
+    const interval = setInterval(() => {
+        if (score >= 40) {
+            clearInterval(interval);
+            return;
+        }
+        
+        const drop = document.createElement("div");
+        drop.className = "raindrop";
+        drop.style.left = Math.random() * 100 + "%";
+        drop.style.animationDuration = (Math.random() * 0.5 + 0.5) + "s";
+        document.body.appendChild(drop);
+        raindrops.push(drop);
+        
+        setTimeout(() => {
+            drop.remove();
+            raindrops = raindrops.filter(d => d !== drop);
+        }, 2000);
+    }, 100);
+}
+
+function stopRain() {
+    raindrops.forEach(drop => drop.remove());
+    raindrops = [];
+}
+
+function createThought() {
+    const thought = document.createElement("div");
+    thought.className = "thought";
+    thought.textContent = negativeThoughts[Math.floor(Math.random() * negativeThoughts.length)];
+
+    let x = Math.random() * (gameArea.clientWidth - 160);
+    let y = gameArea.clientHeight + 50;
+
+    thought.style.left = x + "px";
+    thought.style.top = y + "px";
+
+    gameArea.appendChild(thought);
+    thoughts.push(thought);
+
+    const speed = 0.5;
+
+    const move = setInterval(() => {
+        y -= speed;
+        thought.style.top = y + "px";
+
+        if (y < -50) {
+            clearInterval(move);
+            thought.remove();
+        }
+    }, 16);
+
+    thought.addEventListener("click", (e) => {
+        explode(e.clientX, e.clientY);
+        transformThought(thought, move);
+    });
+}
+
+function explode(x, y) {
+    const rect = gameArea.getBoundingClientRect();
+    const boom = document.createElement("div");
+    boom.className = "explosion";
+    boom.style.width = "40px";
+    boom.style.height = "40px";
+    boom.style.left = (x - rect.left - 20) + "px";
+    boom.style.top = (y - rect.top - 20) + "px";
+    gameArea.appendChild(boom);
+    setTimeout(() => boom.remove(), 600);
+}
+
+function transformThought(thought, interval) {
+    thought.textContent = positiveThoughts[Math.floor(Math.random() * positiveThoughts.length)];
+    thought.style.background = "rgba(45,212,191,0.2)";
+    thought.style.borderColor = "rgba(45,212,191,0.4)";
+    thought.style.transform = "scale(1.1)";
+
+    score++;
+    scoreDisplay.textContent = score;
+    updateWeather();
+
+    setTimeout(() => {
+        thought.classList.add("fade");
+        setTimeout(() => {
+            thought.remove();
+            clearInterval(interval);
+        }, 400);
+    }, 600);
+}
+
+updateWeather();
+setInterval(createThought, 2000);
+</script>
+
+</body>
+</html>
