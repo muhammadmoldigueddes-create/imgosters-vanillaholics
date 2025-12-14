@@ -708,7 +708,7 @@
 
         <!-- Error banner -->
         <div class="error-banner" id="errorBanner">
-            <span class="error-icon">⚠</span>
+            <span class="error-icon">⚠️</span>
             <span class="error-text" id="errorText"></span>
         </div>
 
@@ -761,13 +761,16 @@
                         ➤
                     </button>
                 </div>
+                <div style="display:flex; justify-content:center; margin-top:0.25rem;"></div>
+                    <a href="positive-game.html" class="suggestion-chip" role="button" aria-label="Play Positive Game">Play Positive Game</a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         // Configuration
-        const API_TOKEN = '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';
+        const API_TOKEN = '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';
         const MAX_HISTORY = 6; // Keep last 6 messages for context
         
         const THERAPIST_SYSTEM_PROMPT = `You are a compassionate AI therapist specializing in CBT and positive reframing. Help users process negative thoughts through validation and perspective-shifting.
@@ -803,7 +806,7 @@ Your goal: Help users metabolize pain into wisdom and self-compassion. Meet them
                 "https://router.huggingface.co/v1/chat/completions",
                 {
                     headers: {
-                        "Authorization": `Bearer ${API_TOKEN}`,
+                        Authorization: `Bearer ${API_TOKEN}`,
                         "Content-Type": "application/json",
                     },
                     method: "POST",
