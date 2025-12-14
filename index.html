@@ -284,68 +284,6 @@
             animation: fadeIn 1.5s ease-out 0.9s backwards;
         }
 
-        /* Breathing guide */
-        .breathing-guide {
-            display: inline-block;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            padding: 0.75rem 1.5rem;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 50px;
-            margin-top: 2rem;
-            animation: fadeIn 1.5s ease-out 1.2s backwards;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .breathing-guide:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            background: rgba(59, 130, 246, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
-        }
-
-        .breathing-text {
-            animation: breathingText 6s ease-in-out infinite;
-        }
-
-        @keyframes breathingText {
-            0%, 100% { 
-                opacity: 0.5;
-            }
-            50% { 
-                opacity: 1;
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                padding: 2rem 1.5rem;
-            }
-
-            .breathing-circle {
-                width: 60px;
-                height: 60px;
-            }
-
-            .subtext {
-                font-size: 1rem;
-            }
-        }
-
-        /* Smooth scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Focus states for accessibility */
-        .breathing-guide:focus {
-            outline: 2px solid var(--primary);
-            outline-offset: 4px;
-        }
-
         /* Scroll indicator */
         .scroll-indicator {
             position: absolute;
@@ -531,21 +469,6 @@
             }
             50% {
                 transform: scale(1.02);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .emoji {
-                font-size: 2rem;
-            }
-
-            .feedback-text {
-                font-size: 1.25rem;
             }
         }
 
@@ -759,7 +682,252 @@
             transform: translateX(5px);
         }
 
+        /* Timeline Section Styles */
+        .timeline-section {
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-container {
+            max-width: 900px;
+            width: 100%;
+            padding: 3rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .timeline-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-chart {
+            position: relative;
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+
+        /* Timeline grid */
+        .timeline-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-line {
+            height: 1px;
+            background: rgba(148, 163, 184, 0.1);
+            position: relative;
+        }
+
+        .grid-label {
+            position: absolute;
+            left: -3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        /* Timeline graph */
+        .timeline-graph {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0 2rem;
+        }
+
+        .timeline-path {
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+            animation: drawPath 2s ease-out forwards;
+        }
+
+        @keyframes drawPath {
+            from {
+                stroke-dasharray: 1000;
+                stroke-dashoffset: 1000;
+            }
+            to {
+                stroke-dasharray: 1000;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .timeline-fill {
+            fill: url(#gradientFill);
+            opacity: 0.2;
+        }
+
+        .timeline-point {
+            fill: var(--text-primary);
+            stroke: var(--bg);
+            stroke-width: 3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: popIn 0.5s ease-out backwards;
+        }
+
+        .timeline-point:hover {
+            r: 8;
+            fill: var(--secondary);
+            filter: drop-shadow(0 0 10px var(--secondary));
+        }
+
+        @keyframes popIn {
+            from {
+                r: 0;
+                opacity: 0;
+            }
+            to {
+                r: 6;
+                opacity: 1;
+            }
+        }
+
+        /* X-axis labels */
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding: 0 2rem;
+        }
+
+        .timeline-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .timeline-label.current {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Legend */
+        .timeline-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .legend-color.severe { background: #dc2626; }
+        .legend-color.high { background: #ef4444; }
+        .legend-color.moderate { background: #f97316; }
+        .legend-color.mild { background: #f59e0b; }
+        .legend-color.low { background: #10b981; }
+        .legend-color.minimal { background: #3b82f6; }
+        .legend-color.thriving { background: #2dd4bf; }
+
+        /* Info cards */
+        .timeline-insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .insight-card {
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .insight-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-value {
+            font-size: 1.75rem;
+            font-weight: 600;
+            font-family: 'Crimson Pro', serif;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .insight-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
         @media (max-width: 768px) {
+            .form-container, .timeline-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .emoji {
+                font-size: 2rem;
+            }
+
+            .feedback-text {
+                font-size: 1.25rem;
+            }
+
             .choice-grid {
                 grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             }
@@ -771,7 +939,33 @@
             .submit-btn {
                 width: 100%;
             }
+
+            .timeline-chart {
+                height: 250px;
+            }
+
+            .grid-label {
+                left: -2.5rem;
+                font-size: 0.65rem;
+            }
+
+            .timeline-graph {
+                padding: 0 1rem;
+            }
+
+            .timeline-labels {
+                padding: 0 1rem;
+            }
+
+            .timeline-label {
+                font-size: 0.75rem;
+            }
+
+            .timeline-insights {
+                grid-template-columns: 1fr;
+            }
         }
+
         /* Chatbot sticky button */
         .chatbot-container {
             position: fixed;
@@ -863,57 +1057,6 @@
             transform: scale(0.95);
         }
 
-        /* Pulse animation for attention */
-        .chatbot-pulse {
-            position: absolute;
-            inset: -10px;
-            border-radius: 50%;
-            border: 2px solid var(--secondary);
-            animation: pulse-ring 2s ease-out infinite;
-        }
-
-        @keyframes pulse-ring {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        /* Notification badge */
-        .chatbot-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 24px;
-            height: 24px;
-            background: #ef4444;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            border: 2px solid var(--bg);
-            animation: badgePop 0.5s ease-out 3s backwards;
-        }
-
-        @keyframes badgePop {
-            0% {
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
         @media (max-width: 768px) {
             .chatbot-container {
                 bottom: 1.5rem;
@@ -963,7 +1106,7 @@
         </p>
 
         <div class="scroll-indicator" onclick="document.querySelector('.form-section').scrollIntoView({behavior: 'smooth'})">
-            <span>Begin </span>
+            <span>Begin</span>
             <div class="scroll-arrow"></div>
         </div>
     </div>
@@ -1211,447 +1354,710 @@
 
             <!-- Submit Button -->
             <div class="submit-section">
-                <button type="submit" class="submit-btn" id="submitBtn" onclick="window.location.href='chat.html'">
+                <button type="button" class="submit-btn" id="submitBtn">
+                    <span>Complete reflection</span>
+                    <span class="submit-arrow">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Section (NEW) -->
+    <div class="timeline-section" id="timelineSection" style="display: flex;">
+        <div class="timeline-container visible" id="timelineContainer">
+            <h2 class="timeline-title">Your Stress Timeline</h2>
+            <p class="timeline-subtitle">Tracking your wellness journey over time</p>
+
+            <!-- Chart -->
+            <div class="timeline-chart">
+                <!-- Grid lines -->
+                <div class="timeline-grid">
+                    <div class="grid-line"><span class="grid-label">100</span></div>
+                    <div class="grid-line"><span class="grid-label">75</span></div>
+                    <div class="grid-line"><span class="grid-label">50</span></div>
+                    <div class="grid-line"><span class="grid-label">25</span></div>
+                    <div class="grid-line"><span class="grid-label">0</span></div>
+                </div>
+
+                <!-- SVG Graph with static sample values -->
+                <div class="timeline-graph">
+                    <svg width="100%" height="100%" id="timelineSvg" viewBox="0 0 900 300" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#2dd4bf;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="gradientFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Static sample path (7 points) -->
+                        <!-- Coordinates calculated for viewBox 0 0 900 300 with 40px padding -->
+                        <path d="M 40 139 L 176.67 128 L 313.33 117 L 450 106 L 586.67 95 L 723.33 84 L 860 73" class="timeline-path"></path>
+
+                        <!-- Static filled area under the path -->
+                        <path d="M 40 260 L 40 139 L 176.67 128 L 313.33 117 L 450 106 L 586.67 95 L 723.33 84 L 860 73 L 860 260 Z" class="timeline-fill"></path>
+
+                        <!-- Static points -->
+                        <circle cx="40" cy="139" r="6" class="timeline-point"></circle>
+                        <circle cx="176.67" cy="128" r="6" class="timeline-point"></circle>
+                        <circle cx="313.33" cy="117" r="6" class="timeline-point"></circle>
+                        <circle cx="450" cy="106" r="6" class="timeline-point"></circle>
+                        <circle cx="586.67" cy="95" r="6" class="timeline-point"></circle>
+                        <circle cx="723.33" cy="84" r="6" class="timeline-point"></circle>
+                        <circle cx="860" cy="73" r="6" class="timeline-point"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- X-axis labels (static sample days) -->
+            <div class="timeline-labels" id="timelineLabels">
+                <div class="timeline-label">Mon</div>
+                <div class="timeline-label">Tue</div>
+                <div class="timeline-label">Wed</div>
+                <div class="timeline-label">Thu</div>
+                <div class="timeline-label">Fri</div>
+                <div class="timeline-label">Sat</div>
+                <div class="timeline-label current">Sun</div>
+            </div>
+
+            <!-- Legend -->
+            <div class="timeline-legend">
+                <div class="legend-item">
+                    <div class="legend-color severe"></div>
+                    <span>Severe</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color high"></div>
+                    <span>High</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color moderate"></div>
+                    <span>Moderate</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color mild"></div>
+                    <span>Mild</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color low"></div>
+                    <span>Low</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color thriving"></div>
+                    <span>Thriving</span>
+                </div>
+            </div>
+
+            <!-- Insights (static sample values) -->
+            <div class="timeline-insights">
+                <div class="insight-card">
+                    <div class="insight-emoji">📊</div>
+                    <div class="insight-value" id="avgScore">70</div>
+                    <div class="insight-label">Average Score</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-emoji">📈</div>
+                    <div class="insight-value" id="trendValue">📈 Improving</div>
+                    <div class="insight-label">Trend</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-emoji">⚡</div>
+                    <div class="insight-value" id="peakDay">Fri</div>
+                    <div class="insight-label">Best Day</div>
+                </div>
+            </div>
+
+            <!-- Continue to therapy button -->
+            <div class="submit-section" style="margin-top: 3rem;">
+                <button type="button" class="submit-btn" onclick="window.location.href='chat.html'">
                     <span>Begin therapy</span>
                     <span class="submit-arrow">→</span>
                 </button>
             </div>
         </div>
     </div>
+
     <!-- Chatbot sticky button -->
     <div class="chatbot-container">
         <div class="chatbot-tooltip">
             <strong>Want to vent things out?</strong><br>
             Get a free AI therapy session!
         </div>
-        <button class="chatbot-button" id="scrollToBottomBtn" aria-label="Open chat" onclick="window.location.href='chat.html'"></button>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1"/>
-            </svg>
+        <button class="chatbot-button" aria-label="Open chat" onclick="window.location.href='chat.html'">
+            💬
         </button>
-
-        <script>
-        (function () {
-            const btn = document.getElementById('scrollToBottomBtn');
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                // Smooth scroll to bottom of the page
-                window.scrollTo({
-                    top: document.documentElement.scrollHeight,
-                    behavior: 'smooth'
-                });
-
-                // Hide tooltip and badge after click for cleaner UX
-                const tooltip = document.querySelector('.chatbot-tooltip');
-                if (tooltip) {
-                    tooltip.style.opacity = '0';
-                    tooltip.style.pointerEvents = 'none';
-                }
-                const badge = btn.querySelector('.chatbot-badge');
-                if (badge) badge.style.display = 'none';
-            });
-        })();
-        </script>
     </div>
+
     <script>
         // Create floating particles for ambient effect
-        function createParticles() {
-            const particlesContainer = document.querySelector('.particles');
-            const particleCount = 15;
+function createParticles() {
+    const particlesContainer = document.querySelector('.particles');
+    const particleCount = 15;
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random starting position
-                particle.style.left = Math.random() * 100 + 'vw';
-                
-                // Random animation duration (slower = more calming)
-                const duration = 15 + Math.random() * 20;
-                particle.style.animationDuration = duration + 's';
-                
-                // Random delay for staggered effect
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random starting position
+        particle.style.left = Math.random() * 100 + 'vw';
+        
+        // Random animation duration (slower = more calming)
+        const duration = 15 + Math.random() * 20;
+        particle.style.animationDuration = duration + 's';
+        
+        // Random delay for staggered effect
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        
+        particlesContainer.appendChild(particle);
+    }
+}
 
-        // Smooth breathing text animation
-        function updateBreathingText() {
-            const breathingText = document.querySelector('.breathing-text');
-            const phases = [
-                '● Breathe in... breathe out',
-                '● Inhale deeply... hold',
-                '● Exhale slowly... release',
-                '● Find your center... relax'
-            ];
-            
-            let currentPhase = 0;
-            
-            setInterval(() => {
-                breathingText.style.opacity = '0';
-                
-                setTimeout(() => {
-                    currentPhase = (currentPhase + 1) % phases.length;
-                    breathingText.textContent = phases[currentPhase];
-                    breathingText.style.opacity = '1';
-                }, 300);
-            }, 12000);
-        }
-
-        // Real-time wellness evaluation system
-        const WellnessEvaluator = {
-            // Background images for different wellness levels
-            backgrounds: {
-                severe: 'https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=1920&q=80', // Dark storm
-                high: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=1920&q=80', // Heavy rain
-                moderate: 'https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=1920&q=80', // Overcast
-                mild: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80', // Gentle nature
-                low: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80', // Mountain sunset
-                minimal: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=80', // Peaceful beach
-                thriving: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80' // Vibrant sunset
-            },
-
-            currentScore: null,
-            
-            // Calculate overall wellness score (0-100)
-            calculateScore() {
-                const dayQuality = parseInt(document.getElementById('moodSlider1')?.value || 50);
-                const mentalClarity = parseInt(document.getElementById('moodSlider2')?.value || 50);
-                const energyLevel = parseInt(document.getElementById('moodSlider3')?.value || 50);
-                
-                // Get stress source weight (lower = more stressful)
-                const stressSourceValue = this.getStressSourceWeight();
-                
-                // Get social interaction weight
-                const socialValue = this.getSocialInteractionWeight();
-                
-                // Count symptoms (each symptom reduces score)
-                const symptomCount = document.querySelectorAll('input[name="symptoms"]:checked').length;
-                const symptomPenalty = symptomCount * 5;
-                
-                // Weighted calculation
-                const baseScore = (
-                    dayQuality * 0.30 +           // 30% weight on overall day
-                    mentalClarity * 0.25 +        // 25% weight on mental clarity
-                    energyLevel * 0.25 +          // 25% weight on energy
-                    stressSourceValue * 0.10 +    // 10% weight on stress source
-                    socialValue * 0.10            // 10% weight on social
-                );
-                
-                // Apply symptom penalty and clamp between 0-100
-                const finalScore = Math.max(0, Math.min(100, baseScore - symptomPenalty));
-                
-                return Math.round(finalScore);
-            },
-            
-            getStressSourceWeight() {
-                const selected = document.querySelector('input[name="stressSource"]:checked');
-                if (!selected) return 50;
-                
-                const weights = {
-                    'none': 100,
-                    'uncertain': 60,
-                    'social_media': 50,
-                    'work': 40,
-                    'relationships': 35,
-                    'health': 25,
-                    'financial': 20
-                };
-                
-                return weights[selected.value] || 50;
-            },
-            
-            getSocialInteractionWeight() {
-                const selected = document.querySelector('input[name="socialInteraction"]:checked');
-                if (!selected) return 50;
-                
-                const weights = {
-                    'positive': 100,
-                    'neutral': 60,
-                    'draining': 30,
-                    'isolated': 20
-                };
-                
-                return weights[selected.value] || 50;
-            },
-            
-            // Get wellness level and status based on score
-            getWellnessLevel(score) {
-                if (score >= 85) return {
-                    level: 'thriving',
-                    status: 'Thriving',
-                    color: '#2dd4bf',
-                    description: 'You\'re in a great place!'
-                };
-                if (score >= 70) return {
-                    level: 'minimal',
-                    status: 'Low stress',
-                    color: '#3b82f6',
-                    description: 'Feeling good overall'
-                };
-                if (score >= 55) return {
-                    level: 'low',
-                    status: 'Mild stress',
-                    color: '#10b981',
-                    description: 'Managing well'
-                };
-                if (score >= 40) return {
-                    level: 'mild',
-                    status: 'Moderate stress',
-                    color: '#f59e0b',
-                    description: 'Some challenges present'
-                };
-                if (score >= 25) return {
-                    level: 'moderate',
-                    status: 'High stress',
-                    color: '#f97316',
-                    description: 'Significant stressors'
-                };
-                if (score >= 15) return {
-                    level: 'high',
-                    status: 'Very high stress',
-                    color: '#ef4444',
-                    description: 'Difficult day'
-                };
-                return {
-                    level: 'severe',
-                    status: 'Severe stress',
-                    color: '#dc2626',
-                    description: 'Crisis level - seek support'
-                };
-            },
-            
-            // Update the UI with current wellness state
-            updateUI() {
-                const score = this.calculateScore();
-                const wellness = this.getWellnessLevel(score);
-                
-                // Update score display
-                document.getElementById('wellnessScore').textContent = score;
-                document.getElementById('wellnessScore').style.setProperty('--wellness-color', wellness.color);
-                document.getElementById('wellnessStatus').textContent = wellness.status;
-                
-                // Update background only if score has changed significantly (to avoid too frequent changes)
-                if (this.currentScore === null || Math.abs(score - this.currentScore) >= 5) {
-                    this.updateBackground(wellness.level);
-                    this.currentScore = score;
-                }
-                
-                // Add visual feedback based on score
-                const indicator = document.getElementById('wellnessIndicator');
-                indicator.style.borderColor = wellness.color + '40';
-                indicator.style.boxShadow = `0 4px 20px ${wellness.color}30`;
-            },
-            
-            // Update background image
-            updateBackground(level) {
-                const overlay = document.getElementById('backgroundOverlay');
-                const backgroundUrl = this.backgrounds[level];
-                
-                // Fade out
-                overlay.classList.remove('active');
-                
-                // Change image and fade in
-                setTimeout(() => {
-                    overlay.style.backgroundImage = `url('${backgroundUrl}')`;
-                    overlay.classList.add('active');
-                }, 500);
-            },
-            
-            // Initialize real-time monitoring
-            init() {
-                // Monitor all form inputs
-                const inputs = [
-                    ...document.querySelectorAll('.mood-slider'),
-                    ...document.querySelectorAll('input[type="radio"]'),
-                    ...document.querySelectorAll('input[type="checkbox"]')
-                ];
-                
-                inputs.forEach(input => {
-                    input.addEventListener('change', () => {
-                        this.updateUI();
-                    });
-                    
-                    // For sliders, also update on input (real-time)
-                    if (input.type === 'range') {
-                        input.addEventListener('input', () => {
-                            this.updateUI();
-                        });
-                    }
-                });
-                
-                // Initial update
-                setTimeout(() => {
-                    this.updateUI();
-                }, 1000);
-            }
+// Timeline Storage Manager
+const TimelineManager = {
+    storageKey: 'stressTimeline',
+    maxEntries: 7, // Show last 7 days
+    
+    // Save current wellness score
+    saveEntry(score, formData) {
+        const entries = this.getEntries();
+        const today = new Date().toLocaleDateString();
+        
+        // Update or add today's entry
+        const existingIndex = entries.findIndex(e => e.date === today);
+        const entry = {
+            date: today,
+            score: score,
+            timestamp: new Date().toISOString(),
+            data: formData
         };
-
-        // Mood slider functionality
-        function initMoodSlider() {
-            // Configuration for each slider
-            const sliderConfigs = {
-                1: {
-                    // Overall day quality
-                    messages: [
-                        { max: 15, text: "My day was awful", color: "#ef4444" },
-                        { max: 30, text: "It wasn't the best day", color: "#f97316" },
-                        { max: 45, text: "It was a little stressful", color: "#f59e0b" },
-                        { max: 55, text: "It was an okay day", color: "#94a3b8" },
-                        { max: 70, text: "It was a good day", color: "#10b981" },
-                        { max: 85, text: "It was a great day!", color: "#3b82f6" },
-                        { max: 100, text: "It was an amazing day!", color: "#2dd4bf" }
-                    ]
-                },
-                2: {
-                    // Mental clarity
-                    messages: [
-                        { max: 15, text: "Completely overwhelmed", color: "#ef4444" },
-                        { max: 30, text: "Very foggy and scattered", color: "#f97316" },
-                        { max: 45, text: "Somewhat unclear", color: "#f59e0b" },
-                        { max: 55, text: "Moderately clear", color: "#94a3b8" },
-                        { max: 70, text: "Pretty clear-headed", color: "#10b981" },
-                        { max: 85, text: "Very focused and sharp", color: "#3b82f6" },
-                        { max: 100, text: "Crystal clear and focused", color: "#2dd4bf" }
-                    ]
-                },
-                3: {
-                    // Energy levels
-                    messages: [
-                        { max: 15, text: "Completely exhausted", color: "#ef4444" },
-                        { max: 30, text: "Very drained", color: "#f97316" },
-                        { max: 45, text: "Low energy", color: "#f59e0b" },
-                        { max: 55, text: "Moderate energy", color: "#94a3b8" },
-                        { max: 70, text: "Good energy", color: "#10b981" },
-                        { max: 85, text: "Very energized", color: "#3b82f6" },
-                        { max: 100, text: "Fully charged!", color: "#2dd4bf" }
-                    ]
-                }
-            };
-            
-            // Initialize each slider
-            [1, 2, 3].forEach(id => {
-                const slider = document.getElementById(`moodSlider${id}`);
-                const feedbackText = document.getElementById(`feedbackText${id}`);
-                const emojiLeft = document.getElementById(`emojiLeft${id}`);
-                const emojiRight = document.getElementById(`emojiRight${id}`);
-                
-                function updateSlider(value) {
-                    const config = sliderConfigs[id];
-                    const feedback = config.messages.find(msg => value <= msg.max);
-                    
-                    // Update feedback text
-                    feedbackText.textContent = feedback.text;
-                    feedbackText.style.setProperty('--feedback-color', feedback.color);
-                    feedbackText.classList.add('show');
-                    
-                    // Update slider glow color
-                    slider.style.setProperty('--slider-glow', feedback.color);
-                    
-                    // Update emoji active states
-                    if (value > 50) {
-                        emojiLeft.classList.add('active');
-                        emojiRight.classList.remove('active');
-                    } else if (value < 50) {
-                        emojiRight.classList.add('active');
-                        emojiLeft.classList.remove('active');
-                    } else {
-                        emojiLeft.classList.remove('active');
-                        emojiRight.classList.remove('active');
-                    }
-                    
-                    // Update gradient background based on value
-                    const gradientStart = interpolateColor('#ef4444', '#2dd4bf', value / 100);
-                    const gradientEnd = interpolateColor('#f59e0b', '#3b82f6', value / 100);
-                    slider.style.background = `linear-gradient(to right, ${gradientStart}, ${gradientEnd})`;
-                }
-                
-                // Event listener
-                slider.addEventListener('input', (e) => {
-                    updateSlider(parseInt(e.target.value));
-                });
-                
-                // Initialize with default value
-                updateSlider(parseInt(slider.value));
-            });
-            
-            // Color interpolation helper
-            function interpolateColor(color1, color2, factor) {
-                const c1 = hexToRgb(color1);
-                const c2 = hexToRgb(color2);
-                
-                const r = Math.round(c1.r + factor * (c2.r - c1.r));
-                const g = Math.round(c1.g + factor * (c2.g - c1.g));
-                const b = Math.round(c1.b + factor * (c2.b - c1.b));
-                
-                return `rgb(${r}, ${g}, ${b})`;
-            }
-            
-            function hexToRgb(hex) {
-                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return result ? {
-                    r: parseInt(result[1], 16),
-                    g: parseInt(result[2], 16),
-                    b: parseInt(result[3], 16)
-                } : null;
-            }
+        
+        if (existingIndex >= 0) {
+            entries[existingIndex] = entry;
+        } else {
+            entries.push(entry);
         }
-
-        // Form submission handler
-        function initFormSubmission() {
-            const submitBtn = document.getElementById('submitBtn');
+        
+        // Keep only last maxEntries
+        const trimmed = entries.slice(-this.maxEntries);
+        localStorage.setItem(this.storageKey, JSON.stringify(trimmed));
+        
+        return trimmed;
+    },
+    
+    // Get all entries
+    getEntries() {
+        const stored = localStorage.getItem(this.storageKey);
+        return stored ? JSON.parse(stored) : [];
+    },
+    
+    // Generate timeline visualization
+    renderTimeline() {
+        const entries = this.getEntries();
+        
+        if (entries.length === 0) {
+            // Generate sample data for first-time users
+            return this.generateSampleData();
+        }
+        
+        return entries;
+    },
+    
+    // Generate sample data for demonstration
+    generateSampleData() {
+        const sampleData = [];
+        const today = new Date();
+        
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
             
-            submitBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Collect all form data
-                const formData = {
-                    timestamp: new Date().toISOString(),
-                    dayQuality: document.getElementById('moodSlider1').value,
-                    mentalClarity: document.getElementById('moodSlider2').value,
-                    energyLevel: document.getElementById('moodSlider3').value,
-                    stressSource: document.querySelector('input[name="stressSource"]:checked')?.value || null,
-                    socialInteraction: document.querySelector('input[name="socialInteraction"]:checked')?.value || null,
-                    symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked')).map(cb => cb.value)
-                };
-                
-                // Log the data (in production, this would be sent to your Django backend)
-                console.log('Stress Reflection Data:', formData);
-                
-                // Visual feedback
-                submitBtn.innerHTML = '<span>✓ Reflection saved</span>';
-                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #2dd4bf)';
-                
-                // Reset after 2 seconds (for demo purposes)
-                setTimeout(() => {
-                    submitBtn.innerHTML = '<span>Complete reflection</span><span class="submit-arrow">→</span>';
-                    submitBtn.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
-                }, 2000);
-                
-                // TODO: Send formData to Django backend via fetch/axios
-                // Example:
-                // fetch('/api/stress-log/', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(formData)
-                // });
+            // Random score with slight upward trend
+            const baseScore = 40 + (6 - i) * 5;
+            const variance = Math.random() * 20 - 10;
+            const score = Math.max(20, Math.min(90, baseScore + variance));
+            
+            sampleData.push({
+                date: date.toLocaleDateString(),
+                score: Math.round(score),
+                timestamp: date.toISOString(),
+                sample: true
             });
         }
+        
+        return sampleData;
+    }
+};
 
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            updateBreathingText();
-            initMoodSlider();
-            initFormSubmission();
-            WellnessEvaluator.init();
+// Timeline Visualization
+const TimelineVisualizer = {
+    init(data) {
+        const svg = document.getElementById('timelineSvg');
+        const svgRect = svg.getBoundingClientRect();
+        const width = svgRect.width;
+        const height = svgRect.height;
+        const padding = 40;
+        
+        // Clear existing content
+        while (svg.childNodes.length > 2) { // Keep defs
+            svg.removeChild(svg.lastChild);
+        }
+        
+        // Calculate points
+        const points = data.map((entry, i) => {
+            const x = padding + (i / (data.length - 1)) * (width - padding * 2);
+            const y = height - padding - (entry.score / 100) * (height - padding * 2);
+            return { x, y, score: entry.score, date: entry.date };
         });
+        
+        // Create path
+        const pathData = points.map((p, i) => 
+            `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+        ).join(' ');
+        
+        // Create filled area
+        const fillData = `M ${padding} ${height - padding} L ${pathData.slice(2)} L ${width - padding} ${height - padding} Z`;
+        
+        // Add fill
+        const fill = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        fill.setAttribute('d', fillData);
+        fill.setAttribute('class', 'timeline-fill');
+        svg.appendChild(fill);
+        
+        // Add line
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', pathData);
+        path.setAttribute('class', 'timeline-path');
+        svg.appendChild(path);
+        
+        // Add points
+        points.forEach((p, i) => {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', p.x);
+            circle.setAttribute('cy', p.y);
+            circle.setAttribute('r', '6');
+            circle.setAttribute('class', 'timeline-point');
+            circle.style.animationDelay = `${i * 0.1}s`;
+            
+            // Tooltip on hover
+            circle.addEventListener('mouseenter', () => {
+                circle.setAttribute('r', '8');
+            });
+            circle.addEventListener('mouseleave', () => {
+                circle.setAttribute('r', '6');
+            });
+            
+            svg.appendChild(circle);
+        });
+        
+        // Update labels
+        this.updateLabels(data);
+        
+        // Update insights
+        this.updateInsights(data);
+    },
+    
+    updateLabels(data) {
+        const labelsContainer = document.getElementById('timelineLabels');
+        labelsContainer.innerHTML = '';
+        
+        data.forEach((entry, i) => {
+            const label = document.createElement('div');
+            label.className = 'timeline-label';
+            
+            // Format date (show day name)
+            const date = new Date(entry.timestamp || entry.date);
+            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+            
+            label.textContent = dayName;
+            
+            // Highlight today
+            if (i === data.length - 1) {
+                label.classList.add('current');
+            }
+            
+            labelsContainer.appendChild(label);
+        });
+    },
+    
+    updateInsights(data) {
+        // Average score
+        const avg = Math.round(data.reduce((sum, e) => sum + e.score, 0) / data.length);
+        document.getElementById('avgScore').textContent = avg;
+        
+        // Trend
+        if (data.length >= 2) {
+            const first = data[0].score;
+            const last = data[data.length - 1].score;
+            const diff = last - first;
+            
+            let trendText = '';
+            if (diff > 10) trendText = '📈 Improving';
+            else if (diff < -10) trendText = '📉 Declining';
+            else trendText = '→ Stable';
+            
+            document.getElementById('trendValue').textContent = trendText;
+        } else {
+            document.getElementById('trendValue').textContent = '→ New';
+        }
+        
+        // Peak day
+        const peak = data.reduce((max, e) => e.score > max.score ? e : max, data[0]);
+        const peakDate = new Date(peak.timestamp || peak.date);
+        const peakDay = peakDate.toLocaleDateString('en-US', { weekday: 'short' });
+        document.getElementById('peakDay').textContent = peakDay;
+    }
+};
 
-        // Smooth transitions for opacity changes
-        document.querySelector('.breathing-text').style.transition = 'opacity 0.6s ease';
+// Real-time wellness evaluation system
+const WellnessEvaluator = {
+    // Background images for different wellness levels
+    backgrounds: {
+        severe: 'https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=1920&q=80', // Dark storm
+        high: 'https://images.unsplash.com/photo-1605727216801-e27ce1d0cc28?w=1920&q=80', // Heavy rain
+        moderate: 'https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=1920&q=80', // Overcast
+        mild: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80', // Gentle nature
+        low: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80', // Mountain sunset
+        minimal: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1920&q=80', // Peaceful beach
+        thriving: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80' // Vibrant sunset
+    },
+
+    currentScore: null,
+    
+    // Calculate overall wellness score (0-100)
+    calculateScore() {
+        const dayQuality = parseInt(document.getElementById('moodSlider1')?.value || 50);
+        const mentalClarity = parseInt(document.getElementById('moodSlider2')?.value || 50);
+        const energyLevel = parseInt(document.getElementById('moodSlider3')?.value || 50);
+        
+        // Get stress source weight (lower = more stressful)
+        const stressSourceValue = this.getStressSourceWeight();
+        
+        // Get social interaction weight
+        const socialValue = this.getSocialInteractionWeight();
+        
+        // Count symptoms (each symptom reduces score)
+        const symptomCount = document.querySelectorAll('input[name="symptoms"]:checked').length;
+        const symptomPenalty = symptomCount * 5;
+        
+        // Weighted calculation
+        const baseScore = (
+            dayQuality * 0.30 +           // 30% weight on overall day
+            mentalClarity * 0.25 +        // 25% weight on mental clarity
+            energyLevel * 0.25 +          // 25% weight on energy
+            stressSourceValue * 0.10 +    // 10% weight on stress source
+            socialValue * 0.10            // 10% weight on social
+        );
+        
+        // Apply symptom penalty and clamp between 0-100
+        const finalScore = Math.max(0, Math.min(100, baseScore - symptomPenalty));
+        
+        return Math.round(finalScore);
+    },
+    
+    getStressSourceWeight() {
+        const selected = document.querySelector('input[name="stressSource"]:checked');
+        if (!selected) return 50;
+        
+        const weights = {
+            'none': 100,
+            'uncertain': 60,
+            'social_media': 50,
+            'work': 40,
+            'relationships': 35,
+            'health': 25,
+            'financial': 20
+        };
+        
+        return weights[selected.value] || 50;
+    },
+    
+    getSocialInteractionWeight() {
+        const selected = document.querySelector('input[name="socialInteraction"]:checked');
+        if (!selected) return 50;
+        
+        const weights = {
+            'positive': 100,
+            'neutral': 60,
+            'draining': 30,
+            'isolated': 20
+        };
+        
+        return weights[selected.value] || 50;
+    },
+    
+    // Get wellness level and status based on score
+    getWellnessLevel(score) {
+        if (score >= 85) return {
+            level: 'thriving',
+            status: 'Thriving',
+            color: '#2dd4bf',
+            description: 'You\'re in a great place!'
+        };
+        if (score >= 70) return {
+            level: 'minimal',
+            status: 'Low stress',
+            color: '#3b82f6',
+            description: 'Feeling good overall'
+        };
+        if (score >= 55) return {
+            level: 'low',
+            status: 'Mild stress',
+            color: '#10b981',
+            description: 'Managing well'
+        };
+        if (score >= 40) return {
+            level: 'mild',
+            status: 'Moderate stress',
+            color: '#f59e0b',
+            description: 'Some challenges present'
+        };
+        if (score >= 25) return {
+            level: 'moderate',
+            status: 'High stress',
+            color: '#f97316',
+            description: 'Significant stressors'
+        };
+        if (score >= 15) return {
+            level: 'high',
+            status: 'Very high stress',
+            color: '#ef4444',
+            description: 'Difficult day'
+        };
+        return {
+            level: 'severe',
+            status: 'Severe stress',
+            color: '#dc2626',
+            description: 'Crisis level - seek support'
+        };
+    },
+    
+    // Update the UI with current wellness state
+    updateUI() {
+        const score = this.calculateScore();
+        const wellness = this.getWellnessLevel(score);
+        
+        // Update score display
+        document.getElementById('wellnessScore').textContent = score;
+        document.getElementById('wellnessScore').style.setProperty('--wellness-color', wellness.color);
+        document.getElementById('wellnessStatus').textContent = wellness.status;
+        
+        // Update background only if score has changed significantly (to avoid too frequent changes)
+        if (this.currentScore === null || Math.abs(score - this.currentScore) >= 5) {
+            this.updateBackground(wellness.level);
+            this.currentScore = score;
+        }
+        
+        // Add visual feedback based on score
+        const indicator = document.getElementById('wellnessIndicator');
+        indicator.style.borderColor = wellness.color + '40';
+        indicator.style.boxShadow = `0 4px 20px ${wellness.color}30`;
+    },
+    
+    // Update background image
+    updateBackground(level) {
+        const overlay = document.getElementById('backgroundOverlay');
+        const backgroundUrl = this.backgrounds[level];
+        
+        // Fade out
+        overlay.classList.remove('active');
+        
+        // Change image and fade in
+        setTimeout(() => {
+            overlay.style.backgroundImage = `url('${backgroundUrl}')`;
+            overlay.classList.add('active');
+        }, 500);
+    },
+    
+    // Initialize real-time monitoring
+    init() {
+        // Monitor all form inputs
+        const inputs = [
+            ...document.querySelectorAll('.mood-slider'),
+            ...document.querySelectorAll('input[type="radio"]'),
+            ...document.querySelectorAll('input[type="checkbox"]')
+        ];
+        
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                this.updateUI();
+            });
+            
+            // For sliders, also update on input (real-time)
+            if (input.type === 'range') {
+                input.addEventListener('input', () => {
+                    this.updateUI();
+                });
+            }
+        });
+        
+        // Initial update
+        setTimeout(() => {
+            this.updateUI();
+        }, 1000);
+    }
+};
+
+// Mood slider functionality
+function initMoodSlider() {
+    // Configuration for each slider
+    const sliderConfigs = {
+        1: {
+            // Overall day quality
+            messages: [
+                { max: 15, text: "My day was awful", color: "#ef4444" },
+                { max: 30, text: "It wasn't the best day", color: "#f97316" },
+                { max: 45, text: "It was a little stressful", color: "#f59e0b" },
+                { max: 55, text: "It was an okay day", color: "#94a3b8" },
+                { max: 70, text: "It was a good day", color: "#10b981" },
+                { max: 85, text: "It was a great day!", color: "#3b82f6" },
+                { max: 100, text: "It was an amazing day!", color: "#2dd4bf" }
+            ]
+        },
+        2: {
+            // Mental clarity
+            messages: [
+                { max: 15, text: "Completely overwhelmed", color: "#ef4444" },
+                { max: 30, text: "Very foggy and scattered", color: "#f97316" },
+                { max: 45, text: "Somewhat unclear", color: "#f59e0b" },
+                { max: 55, text: "Moderately clear", color: "#94a3b8" },
+                { max: 70, text: "Pretty clear-headed", color: "#10b981" },
+                { max: 85, text: "Very focused and sharp", color: "#3b82f6" },
+                { max: 100, text: "Crystal clear and focused", color: "#2dd4bf" }
+            ]
+        },
+        3: {
+            // Energy levels
+            messages: [
+                { max: 15, text: "Completely exhausted", color: "#ef4444" },
+                { max: 30, text: "Very drained", color: "#f97316" },
+                { max: 45, text: "Low energy", color: "#f59e0b" },
+                { max: 55, text: "Moderate energy", color: "#94a3b8" },
+                { max: 70, text: "Good energy", color: "#10b981" },
+                { max: 85, text: "Very energized", color: "#3b82f6" },
+                { max: 100, text: "Fully charged!", color: "#2dd4bf" }
+            ]
+        }
+    };
+    
+    // Initialize each slider
+    [1, 2, 3].forEach(id => {
+        const slider = document.getElementById(`moodSlider${id}`);
+        const feedbackText = document.getElementById(`feedbackText${id}`);
+        const emojiLeft = document.getElementById(`emojiLeft${id}`);
+        const emojiRight = document.getElementById(`emojiRight${id}`);
+        
+        function updateSlider(value) {
+            const config = sliderConfigs[id];
+            const feedback = config.messages.find(msg => value <= msg.max);
+            
+            // Update feedback text
+            feedbackText.textContent = feedback.text;
+            feedbackText.style.setProperty('--feedback-color', feedback.color);
+            feedbackText.classList.add('show');
+            
+            // Update slider glow color
+            slider.style.setProperty('--slider-glow', feedback.color);
+            
+            // Update emoji active states
+            if (value > 50) {
+                emojiLeft.classList.add('active');
+                emojiRight.classList.remove('active');
+            } else if (value < 50) {
+                emojiRight.classList.add('active');
+                emojiLeft.classList.remove('active');
+            } else {
+                emojiLeft.classList.remove('active');
+                emojiRight.classList.remove('active');
+            }
+            
+            // Update gradient background based on value
+            const gradientStart = interpolateColor('#ef4444', '#2dd4bf', value / 100);
+            const gradientEnd = interpolateColor('#f59e0b', '#3b82f6', value / 100);
+            slider.style.background = `linear-gradient(to right, ${gradientStart}, ${gradientEnd})`;
+        }
+        
+        // Event listener
+        slider.addEventListener('input', (e) => {
+            updateSlider(parseInt(e.target.value));
+        });
+        
+        // Initialize with default value
+        updateSlider(parseInt(slider.value));
+    });
+    
+    // Color interpolation helper
+    function interpolateColor(color1, color2, factor) {
+        const c1 = hexToRgb(color1);
+        const c2 = hexToRgb(color2);
+        
+        const r = Math.round(c1.r + factor * (c2.r - c1.r));
+        const g = Math.round(c1.g + factor * (c2.g - c1.g));
+        const b = Math.round(c1.b + factor * (c2.b - c1.b));
+        
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+}
+
+// Form submission handler
+function initFormSubmission() {
+    const submitBtn = document.getElementById('submitBtn');
+    
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Collect all form data
+        const formData = {
+            timestamp: new Date().toISOString(),
+            dayQuality: document.getElementById('moodSlider1').value,
+            mentalClarity: document.getElementById('moodSlider2').value,
+            energyLevel: document.getElementById('moodSlider3').value,
+            stressSource: document.querySelector('input[name="stressSource"]:checked')?.value || null,
+            socialInteraction: document.querySelector('input[name="socialInteraction"]:checked')?.value || null,
+            symptoms: Array.from(document.querySelectorAll('input[name="symptoms"]:checked')).map(cb => cb.value)
+        };
+        
+        // Calculate and save wellness score
+        const score = WellnessEvaluator.calculateScore();
+        const timelineData = TimelineManager.saveEntry(score, formData);
+        
+        // Visual feedback
+        submitBtn.innerHTML = '<span>✓ Reflection saved</span>';
+        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #2dd4bf)';
+        
+        // Show timeline section
+        setTimeout(() => {
+            document.getElementById('timelineSection').style.display = 'flex';
+            document.getElementById('timelineSection').scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                document.getElementById('timelineContainer').classList.add('visible');
+                TimelineVisualizer.init(timelineData);
+            }, 300);
+        }, 800);
+    });
+}
+
+// Initialize on load
+window.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    initMoodSlider();
+    initFormSubmission();
+    WellnessEvaluator.init();
+});
+
     </script>
 </body>
 </html>
