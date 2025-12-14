@@ -1005,7 +1005,7 @@
                 
                 <div class="slider-container">
                     <div class="emoji-indicators">
-                        <span class="emoji emoji-right" id="emojiRight2">🌫</span>
+                        <span class="emoji emoji-right" id="emojiRight2">🌫️</span>
                         <span class="emoji emoji-left" id="emojiLeft2">🧠✨</span>
                     </div>
                     
@@ -1443,7 +1443,7 @@
                 // Add visual feedback based on score
                 const indicator = document.getElementById('wellnessIndicator');
                 indicator.style.borderColor = wellness.color + '40';
-                indicator.style.boxShadow = '0 4px 20px ' + wellness.color + '30';
+                indicator.style.boxShadow = `0 4px 20px ${wellness.color}30`;
             },
             
             // Update background image
@@ -1456,7 +1456,7 @@
                 
                 // Change image and fade in
                 setTimeout(() => {
-                    overlay.style.backgroundImage = url('${backgroundUrl}');
+                    overlay.style.backgroundImage = `url('${backgroundUrl}')`;
                     overlay.classList.add('active');
                 }, 500);
             },
@@ -1587,7 +1587,7 @@
                 const g = Math.round(c1.g + factor * (c2.g - c1.g));
                 const b = Math.round(c1.b + factor * (c2.b - c1.b));
                 
-                return rgb(`${r}`, `${g}`, `${b}`);
+                return `rgb(${r}, ${g}, ${b})`;
             }
             
             function hexToRgb(hex) {
